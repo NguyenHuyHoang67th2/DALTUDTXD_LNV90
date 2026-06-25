@@ -1,12 +1,147 @@
-﻿<Window x:Class="DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages.HomePage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages"
-        mc:Ignorable="d"
-        Title="HomePage" Height="450" Width="800">
-    <Grid>
-        
+﻿<Page x:Class="DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="HomePage"
+      Background="#F0F2F5">
+
+    <Page.Resources>
+        <!-- Style cho 4 hàng nút bấm lớn -->
+        <Style x:Key="StepButton" TargetType="Button">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#CFD8DC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+            <Setter Property="Height" Value="85"/>
+            <Setter Property="Width" Value="800"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="5" ShadowDepth="1" Opacity="0.05"/>
+                            </Border.Effect>
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#EBF3FC"/>
+                    <Setter Property="BorderBrush" Value="#2196F3"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="40">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Khu vực Tiêu đề lớn & Nút quay lại -->
+            <RowDefinition Height="*"/>
+            <!-- Khu vực 4 nút -->
+        </Grid.RowDefinitions>
+
+        <!-- Tiêu đề lớn nổi bật trên đầu & Nút quay lại màn hình chính -->
+        <Grid Grid.Row="0" Margin="0,15,0,30">
+            <StackPanel HorizontalAlignment="Left">
+                <TextBlock Text="HỆ THỐNG KIỂM TRA ĐIỀU KIỆN DẦM THÉP CHỮ I"
+                           FontSize="22" FontWeight="Bold" Foreground="#1A237E"/>
+                <TextBlock Text="Thực hiện tuần tự 4 bước chuẩn hóa theo tiêu chuẩn hiện hành TCVN 5575:2012"
+                           FontSize="13" Foreground="#546E7A" FontWeight="Medium" Margin="0,8,0,0"/>
+            </StackPanel>
+
+            <Button Content="↩ Quay lại màn hình chính" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center"
+                    Background="#546E7A" Foreground="White"
+                    Padding="15,8" FontWeight="SemiBold" Cursor="Hand"
+                    Click="btnQuayLaiStart_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <!-- 4 hàng nút bấm chức năng ở trung tâm -->
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top">
+
+            <!-- Hàng 1: Kích thước -->
+            <Button Style="{StaticResource StepButton}" Click="btnKichThuoc_Click">
+                <Grid Margin="25,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="📐" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0">
+                        <TextBlock Text="BƯỚC 1: KÍCH THƯỚC HÌNH HỌC DẦM" FontWeight="Bold" FontSize="15" Foreground="#1A237E"/>
+                        <TextBlock Text="Khai báo thông số nhịp dầm, chiều cao và chiều dày bản bụng, bản cánh..." FontSize="12" Foreground="#78909C" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <TextBlock Grid.Column="2" Text="Thiết lập tham số ➔" FontSize="13" Foreground="#0D47A1" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                </Grid>
+            </Button>
+
+            <!-- Hàng 2: Vật liệu -->
+            <Button Style="{StaticResource StepButton}" Click="btnVatLieu_Click">
+                <Grid Margin="25,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="🧱" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0">
+                        <TextBlock Text="BƯỚC 2: THIẾT LẬP VẬT LIỆU THÉP" FontWeight="Bold" FontSize="15" Foreground="#1A237E"/>
+                        <TextBlock Text="Chọn mác thép cường độ cao, thiết lập cường độ uốn, cắt, mô đun E..." FontSize="12" Foreground="#78909C" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <TextBlock Grid.Column="2" Text="Thiết lập tham số ➔" FontSize="13" Foreground="#0D47A1" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                </Grid>
+            </Button>
+
+            <!-- Hàng 3: Nội lực -->
+            <Button Style="{StaticResource StepButton}" Click="btnNoiLuc_Click">
+                <Grid Margin="25,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="📉" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0">
+                        <TextBlock Text="BƯỚC 3: XÁC ĐỊNH NỘI LỰC" FontWeight="Bold" FontSize="15" Foreground="#1A237E"/>
+                        <TextBlock Text="Khai báo tải trọng, tính toán Mô-men uốn và Lực cắt lớn nhất tác dụng..." FontSize="12" Foreground="#78909C" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <TextBlock Grid.Column="2" Text="Thiết lập tham số ➔" FontSize="13" Foreground="#0D47A1" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                </Grid>
+            </Button>
+
+            <!-- Hàng 4: Kiểm tra -->
+            <Button Style="{StaticResource StepButton}" Click="btnKiemTra_Click">
+                <Grid Margin="25,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="✅" FontSize="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0">
+                        <TextBlock Text="BƯỚC 4: CHẠY KIỂM TRA ĐIỀU KIỆN" FontWeight="Bold" FontSize="15" Foreground="#1A237E"/>
+                        <TextBlock Text="Kiểm tra bền, độ võng dầm, ổn định tổng thể và ổn định cục bộ bản thép..." FontSize="12" Foreground="#78909C" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <TextBlock Grid.Column="2" Text="Bắt đầu tính toán ➔" FontSize="13" Foreground="#2E7D32" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                </Grid>
+            </Button>
+
+        </StackPanel>
     </Grid>
-</Window>
+</Page>

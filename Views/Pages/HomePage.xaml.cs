@@ -1,27 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages
 {
-    /// <summary>
-    /// Interaction logic for HomePage.xaml
-    /// </summary>
-    public partial class HomePage : Window
+    public partial class HomePage : Page
     {
         public HomePage()
         {
             InitializeComponent();
+        }
+
+        private void btnKichThuoc_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.NavigationService != null)
+                this.NavigationService.Navigate(new KichThuocPage());
+        }
+
+        private void btnVatLieu_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.NavigationService != null)
+                this.NavigationService.Navigate(new VatLieuPage());
+        }
+
+        private void btnNoiLuc_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.NavigationService != null)
+                this.NavigationService.Navigate(new NoiLucPage());
+        }
+
+        private void btnKiemTra_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.NavigationService != null)
+                this.NavigationService.Navigate(new TinhToanPage());
+        }
+
+        // Sự kiện click nút quay lại màn hình chào mừng ban đầu của MainWindow
+        private void btnQuayLaiStart_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            if (mainWindow != null)
+            {
+                mainWindow.QuayLaiManHinhKhoiDong();
+            }
         }
     }
 }
