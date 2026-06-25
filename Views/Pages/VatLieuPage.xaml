@@ -1,12 +1,169 @@
-﻿<Window x:Class="DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages.VatLieuPage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages"
-        mc:Ignorable="d"
-        Title="VatLieuPage" Height="450" Width="800">
-    <Grid>
-        
+﻿<Page x:Class="DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages.VatLieuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="VatLieuPage"
+      Background="#F0F2F5"
+      Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="PrimaryBlue" Color="#1A237E"/>
+        <SolidColorBrush x:Key="BorderGray"  Color="#CFD8DC"/>
+
+        <Style x:Key="RowLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#37474F"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="280"/>
+        </Style>
+
+        <Style x:Key="ReadOnlyTextBox" TargetType="TextBox">
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Width" Value="160"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#0D47A1"/>
+            <Setter Property="Background" Value="#ECEFF1"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderGray}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Tiêu đề trang con -->
+        <Grid Grid.Row="0" Margin="0,0,0,25">
+            <StackPanel HorizontalAlignment="Left">
+                <TextBlock Text="BƯỚC 2: THIẾT LẬP ĐẶC TRƯNG VẬT LIỆU THÉP" 
+                           FontSize="18" FontWeight="Bold" Foreground="{StaticResource PrimaryBlue}"/>
+                <TextBlock Text="Lựa chọn mác thép theo tiêu chuẩn hiện hành và cấu hình hệ số điều kiện làm việc" 
+                           FontSize="12" Foreground="#546E7A" Margin="0,4,0,0"/>
+            </StackPanel>
+
+            <Button Content="↩ Quay lại trang chủ" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center"
+                    Background="#546E7A" Foreground="White"
+                    Padding="15,8" FontWeight="SemiBold" Cursor="Hand"
+                    Click="btnQuayLai_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <!-- Bảng thông số xếp theo 4 hàng ngang -->
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+            <Border Background="White" CornerRadius="12" BorderBrush="{StaticResource BorderGray}" BorderThickness="1" Padding="40,30">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.05"/>
+                </Border.Effect>
+
+                <StackPanel Width="650">
+                    <TextBlock Text="ĐẶC TRƯNG CƠ LÝ CỦA THÉP" FontSize="15" FontWeight="Bold" Foreground="#1A237E" Margin="0,0,0,25" HorizontalAlignment="Center"/>
+
+                    <!-- HÀNG NGANG 1: CHỌN MÁC THÉP -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="1. Lựa chọn mác thép dầm:" Style="{StaticResource RowLabel}"/>
+                        <ComboBox x:Name="cboSteelGrade" Grid.Column="1" Height="38" Width="300" FontSize="14" 
+                                  HorizontalAlignment="Left" VerticalContentAlignment="Center"
+                                  SelectionChanged="cboSteelGrade_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Run Text="{Binding Name}" FontWeight="Bold"/>
+                                        <Run Text=" - "/>
+                                        <Run Text="{Binding Standard}" Foreground="#78909C" FontSize="12"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Grid>
+
+                    <!-- HÀNG NGANG 2: GIỚI HẠN CHẢY (RÀNG BUỘC BINDING) -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="2. Giới hạn chảy của thép (fy):" Style="{StaticResource RowLabel}"/>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                            <TextBox x:Name="txtFy" Style="{StaticResource ReadOnlyTextBox}"
+                                     Text="{Binding Fy, Mode=OneWay, StringFormat=0.0}"/>
+                            <TextBlock Text="MPa" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#78909C" FontSize="13"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- HÀNG NGANG 3: CƯỜNG ĐỘ TÍNH TOÁN (RÀNG BUỘC BINDING) -->
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="3. Cường độ tính toán uốn/cắt (f | fv):" Style="{StaticResource RowLabel}"/>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                            <TextBlock Text="f =" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="#37474F" FontSize="13"/>
+                            <!-- Hiển thị đúng khoảng cường độ chữ (FValue liên kết trong ViewModel) -->
+                            <TextBox x:Name="txtF" Style="{StaticResource ReadOnlyTextBox}" Width="100"
+                                     Text="{Binding F, Mode=OneWay, StringFormat=0.0}"/>
+
+                            <TextBlock Text="MPa  |  fv = 0.58f =" VerticalAlignment="Center" Margin="10,0,5,0" Foreground="#37474F" FontSize="13"/>
+                            <TextBox x:Name="txtFv" Style="{StaticResource ReadOnlyTextBox}" Width="100"
+                                     Text="{Binding Fv, Mode=OneWay, StringFormat=0.00}"/>
+                            <TextBlock Text="MPa" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#78909C" FontSize="13"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- HÀNG NGANG 4: HỆ SỐ ĐIỀU KIỆN LÀM VIỆC (RÀNG BUỘC BINDING) -->
+                    <Grid Margin="0,0,0,30">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="4. Hệ số điều kiện làm việc (γc):" Style="{StaticResource RowLabel}"/>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                            <TextBox x:Name="txtGammaC" Height="38" Width="160" FontSize="14" FontWeight="Bold"
+                                     VerticalContentAlignment="Center" Padding="10,0"
+                                     Text="{Binding GammaC, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     BorderBrush="{StaticResource BorderGray}" BorderThickness="1"/>
+                            <TextBlock Text="—" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#78909C" FontSize="13"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Nút xác nhận lưu thông số -->
+                    <Button Content="💾 Lưu &amp; Xác nhận vật liệu" 
+                            Background="{StaticResource PrimaryBlue}" Foreground="White"
+                            Height="45" Width="300" FontWeight="Bold" FontSize="14" Cursor="Hand"
+                            HorizontalAlignment="Center" Click="btnSave_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
-</Window>
+</Page>
