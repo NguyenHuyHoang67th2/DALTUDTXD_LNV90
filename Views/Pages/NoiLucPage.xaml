@@ -1,12 +1,137 @@
-﻿<Window x:Class="DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages.NoiLucPage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages"
-        mc:Ignorable="d"
-        Title="NoiLucPage" Height="450" Width="800">
-    <Grid>
-        
+﻿<Page x:Class="DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages.NoiLucPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="NoiLucPage"
+      Background="#F0F2F5"
+      Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="PrimaryBlue" Color="#1A237E"/>
+        <SolidColorBrush x:Key="BorderGray"  Color="#CFD8DC"/>
+
+        <Style x:Key="ForceTextBox" TargetType="TextBox">
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderGray}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Tiêu đề trang con -->
+        <Grid Grid.Row="0" Margin="0,0,0,25">
+            <StackPanel HorizontalAlignment="Left">
+                <TextBlock Text="BƯỚC 3: XÁC ĐỊNH NỘI LỰC THIẾT KẾ DẦM" 
+                           FontSize="18" FontWeight="Bold" Foreground="{StaticResource PrimaryBlue}"/>
+                <TextBlock Text="Khai báo giá trị nội lực lớn nhất tác dụng lên mặt cắt dầm chữ I" 
+                           FontSize="12" Foreground="#546E7A" Margin="0,4,0,0"/>
+            </StackPanel>
+
+            <Button Content="↩ Quay lại trang chủ" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center"
+                    Background="#546E7A" Foreground="White"
+                    Padding="15,8" FontWeight="SemiBold" Cursor="Hand"
+                    Click="btnQuayLai_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <!-- Bảng điều khiển phương thức chọn -->
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0">
+            <Border Background="White" CornerRadius="12" BorderBrush="{StaticResource BorderGray}" BorderThickness="1" Padding="40,35" Width="700">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.05"/>
+                </Border.Effect>
+
+                <StackPanel>
+                    <TextBlock Text="CHỌN PHƯƠNG THỨC NHẬP LIỆU NỘI LỰC" FontSize="14" FontWeight="Bold" Foreground="#37474F" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,30">
+                        <RadioButton x:Name="rdoManual" Content="✍️ Nhập tay thủ công" FontSize="14" FontWeight="Bold" 
+                                     GroupName="InputMode" IsChecked="True" Margin="0,0,40,0" Cursor="Hand"
+                                     Checked="rdoManual_Checked"/>
+
+                        <RadioButton x:Name="rdoEtabs" Content="🔌 Kết nối trực tiếp từ ETABS" FontSize="14" FontWeight="Bold" 
+                                     GroupName="InputMode" Cursor="Hand"
+                                     Checked="rdoEtabs_Checked"/>
+                    </StackPanel>
+
+                    <Separator BorderBrush="{StaticResource BorderGray}" BorderThickness="0.5" Margin="0,0,0,25"/>
+
+                    <!-- SỔ RA PHẦN NHẬP TAY (TÍCH HỢP BINDING HAI CHIỀU) -->
+                    <StackPanel x:Name="PanelManualInput" Visibility="Visible">
+                        <!-- Nhập Momen M -->
+                        <Grid Margin="0,0,0,20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="300"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Mô-men uốn lớn nhất (M):" FontSize="13" FontWeight="Bold" Foreground="#546E7A" VerticalAlignment="Center"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBox x:Name="txtM" Style="{StaticResource ForceTextBox}"
+                                         Text="{Binding M, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Text="kNm" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#78909C" FontSize="13" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Nhập Lực cắt V -->
+                        <Grid Margin="0,0,0,30">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="300"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Lực cắt lớn nhất (V):" FontSize="13" FontWeight="Bold" Foreground="#546E7A" VerticalAlignment="Center"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBox x:Name="txtV" Style="{StaticResource ForceTextBox}"
+                                         Text="{Binding V, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Text="kN" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#78909C" FontSize="13" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- PHẦN KẾT NỐI ETABS -->
+                    <StackPanel x:Name="PanelEtabsInput" Visibility="Collapsed" Margin="0,10,0,30">
+                        <Border Background="#ECEFF1" CornerRadius="8" Padding="20">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock Text="🔌 TÍNH NĂNG ĐANG ĐƯỢC PHÁT TRIỂN" FontSize="14" FontWeight="Bold" Foreground="#37474F" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Tính năng đọc trực tiếp biểu đồ nội lực từ phần mềm ETABS sẽ được tích hợp sau." 
+                                           FontSize="12" Foreground="#78909C" Margin="0,5,0,0" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Nút Lưu thông số -->
+                    <Button x:Name="btnSave" Content="💾 Lưu thông số nội lực" 
+                            Background="{StaticResource PrimaryBlue}" Foreground="White"
+                            Height="45" Width="260" FontWeight="Bold" FontSize="14" Cursor="Hand"
+                            HorizontalAlignment="Center" Click="btnSave_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
-</Window>
+</Page>
