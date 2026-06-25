@@ -1,12 +1,579 @@
-﻿<Window x:Class="DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages.TinhToanPage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages"
-        mc:Ignorable="d"
-        Title="TinhToanPage" Height="450" Width="800">
-    <Grid>
-        
+﻿<Page x:Class="DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages.TinhToanPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="TinhToanPage"
+      Background="#F0F2F5"
+      Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="PrimaryBlue" Color="#1A237E"/>
+        <SolidColorBrush x:Key="AccentBlue"  Color="#0D47A1"/>
+        <SolidColorBrush x:Key="BorderGray"  Color="#CFD8DC"/>
+
+        <Style x:Key="TableHeaderText" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="ResultValueText" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#0D47A1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="LabelCheckText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#546E7A"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <StackPanel HorizontalAlignment="Left">
+                <TextBlock Text="BƯỚC 4: TÍNH TOÁN &amp; KIỂM TRA ĐIỀU KIỆN DẦM" 
+                           FontSize="18" FontWeight="Bold" Foreground="{StaticResource PrimaryBlue}"/>
+                <TextBlock Text="Báo cáo kết quả tính toán chi tiết và thẩm định khả năng chịu lực dầm chữ I" 
+                           FontSize="12" Foreground="#546E7A" Margin="0,4,0,0"/>
+            </StackPanel>
+
+            <Button Content="↩ Quay lại trang chủ" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center"
+                    Background="#546E7A" Foreground="White"
+                    Padding="15,8" FontWeight="SemiBold" Cursor="Hand"
+                    Click="btnQuayLai_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <!-- KHU VỰC CHÍNH: TAB CONTROL -->
+        <TabControl Grid.Row="1" Background="White" BorderBrush="{StaticResource BorderGray}" BorderThickness="1">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <ContentPresenter Content="{TemplateBinding Content}" Margin="15,8"/>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="FontSize" Value="13"/>
+                </Style>
+            </TabControl.Resources>
+
+            <!-- ================= TAB 1: ĐẶC TRƯNG HÌNH HỌC ================= -->
+            <TabItem Header="1. Đặc trưng hình học">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="20">
+                    <StackPanel>
+                        <!-- QUY ĐỔI SANG MÉT (KẾT NỐI TRỰC TIẾP MVVM) -->
+                        <Border Background="#ECEFF1" CornerRadius="6" Padding="15,10" Margin="0,0,0,20">
+                            <StackPanel>
+                                <TextBlock Text="📐 Thông số kích thước quy đổi sang đơn vị Mét (m):" FontWeight="Bold" Foreground="#37474F" FontSize="13" Margin="0,0,0,8"/>
+                                <WrapPanel>
+                                    <TextBlock Margin="0,0,25,0" FontSize="13"><Run Text="hw =" Foreground="#546E7A"/> <Run Text="{Binding Results.hw_m, StringFormat=0.000, Mode=OneWay}" FontWeight="Bold"/> <Run Text="m" Foreground="#78909C"/></TextBlock>
+                                    <TextBlock Margin="0,0,25,0" FontSize="13"><Run Text="tw =" Foreground="#546E7A"/> <Run Text="{Binding Results.tw_m, StringFormat=0.000, Mode=OneWay}" FontWeight="Bold"/> <Run Text="m" Foreground="#78909C"/></TextBlock>
+                                    <TextBlock Margin="0,0,25,0" FontSize="13"><Run Text="bf =" Foreground="#546E7A"/> <Run Text="{Binding Results.bf_m, StringFormat=0.000, Mode=OneWay}" FontWeight="Bold"/> <Run Text="m" Foreground="#78909C"/></TextBlock>
+                                    <TextBlock Margin="0,0,25,0" FontSize="13"><Run Text="tf =" Foreground="#546E7A"/> <Run Text="{Binding Results.tf_m, StringFormat=0.000, Mode=OneWay}" FontWeight="Bold"/> <Run Text="m" Foreground="#78909C"/></TextBlock>
+                                </WrapPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0" Background="{StaticResource PrimaryBlue}" CornerRadius="4,4,0,0" Height="40">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="220"/>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Đặc trưng tiết diện" Style="{StaticResource TableHeaderText}"/>
+                                    <TextBlock Grid.Column="1" Text="Công thức tính toán" Style="{StaticResource TableHeaderText}"/>
+                                    <TextBlock Grid.Column="2" Text="Giá trị tính toán (Hệ mét)" Style="{StaticResource TableHeaderText}" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                                    <TextBlock Grid.Column="3" Text="Đơn vị" Style="{StaticResource TableHeaderText}"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Diện tích A -->
+                            <Border Grid.Row="1" BorderBrush="{StaticResource BorderGray}" BorderThickness="0,0,0,1" Height="50" Padding="10,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="210"/>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="1. Diện tích mặt cắt (A):" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                    <TextBlock Grid.Column="1" Text="A = 2*bf*tf + tw*hw" VerticalAlignment="Center" FontStyle="Italic" Foreground="#546E7A"/>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                                        <TextBlock Text="{Binding Results.Area, StringFormat=0.000000, Mode=OneWay}" Style="{StaticResource ResultValueText}"/>
+                                        <TextBlock Text="{Binding Results.Area, StringFormat='  ({0:E4})', Mode=OneWay}" Foreground="#78909C" VerticalAlignment="Center" FontSize="13"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="3" Text="m²" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#78909C"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Ix -->
+                            <Border Grid.Row="2" BorderBrush="{StaticResource BorderGray}" BorderThickness="0,0,0,1" Height="55" Padding="10,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="210"/>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="2. Mô-men quán tính trục mạnh (Ix):" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="Ix = 2*(bf*tf³/12 + bf*tf*d²)" FontStyle="Italic" Foreground="#546E7A" FontSize="11"/>
+                                        <TextBlock Text="với d = (hw + tf)/2" FontStyle="Italic" Foreground="#78909C" FontSize="10" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                                        <TextBlock Text="{Binding Results.Ix, StringFormat=0.000000, Mode=OneWay}" Style="{StaticResource ResultValueText}"/>
+                                        <TextBlock Text="{Binding Results.Ix, StringFormat='  ({0:E4})', Mode=OneWay}" Foreground="#78909C" VerticalAlignment="Center" FontSize="13"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="3" Text="m⁴" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#78909C"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Iy -->
+                            <Border Grid.Row="3" BorderBrush="{StaticResource BorderGray}" BorderThickness="0,0,0,1" Height="50" Padding="10,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="210"/>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="3. Mô-men quán tính trục yếu (Iy):" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                    <TextBlock Grid.Column="1" Text="Iy = tf*bf³/6 + hw*tw³/12" VerticalAlignment="Center" FontStyle="Italic" Foreground="#546E7A"/>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                                        <TextBlock Text="{Binding Results.Iy, StringFormat=0.000000, Mode=OneWay}" Style="{StaticResource ResultValueText}"/>
+                                        <TextBlock Text="{Binding Results.Iy, StringFormat='  ({0:E4})', Mode=OneWay}" Foreground="#78909C" VerticalAlignment="Center" FontSize="13"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="3" Text="m⁴" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#78909C"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Wx -->
+                            <Border Grid.Row="4" BorderBrush="{StaticResource BorderGray}" BorderThickness="0,0,0,1" Height="50" Padding="10,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="210"/>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="4. Mô-men chống uốn (Wx):" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                    <TextBlock Grid.Column="1" Text="Wx = 2*Ix / (hw + 2*tf)" VerticalAlignment="Center" FontStyle="Italic" Foreground="#546E7A"/>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                                        <TextBlock Text="{Binding Results.Wx, StringFormat=0.000000, Mode=OneWay}" Style="{StaticResource ResultValueText}"/>
+                                        <TextBlock Text="{Binding Results.Wx, StringFormat='  ({0:E4})', Mode=OneWay}" Foreground="#78909C" VerticalAlignment="Center" FontSize="13"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="3" Text="m³" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#78909C"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Sx -->
+                            <Border Grid.Row="5" BorderBrush="{StaticResource BorderGray}" BorderThickness="0,0,0,1" Height="50" Padding="10,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="210"/>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="5. Mô-men tĩnh nửa tiết diện (Sx):" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                    <TextBlock Grid.Column="1" Text="Sx = bf*tf*(hw+tf)/2 + tw*hw²/8" VerticalAlignment="Center" FontStyle="Italic" Foreground="#546E7A"/>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                                        <TextBlock Text="{Binding Results.Sx, StringFormat=0.000000, Mode=OneWay}" Style="{StaticResource ResultValueText}"/>
+                                        <TextBlock Text="{Binding Results.Sx, StringFormat='  ({0:E4})', Mode=OneWay}" Foreground="#78909C" VerticalAlignment="Center" FontSize="13"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="3" Text="m³" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#78909C"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- ix, iy -->
+                            <Border Grid.Row="6" BorderBrush="{StaticResource BorderGray}" BorderThickness="0,0,0,1" Height="55" Padding="10,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="210"/>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="6. Bán kính quán tính (ix | iy):" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                    <TextBlock Grid.Column="1" Text="ix = √(Ix/A)  |  iy = √(Iy/A)" VerticalAlignment="Center" FontStyle="Italic" Foreground="#546E7A"/>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                                        <TextBlock Text="ix = " Foreground="#37474F" FontSize="13" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Results.ix, StringFormat=0.0000, Mode=OneWay}" Style="{StaticResource ResultValueText}" Margin="0,0,25,0"/>
+                                        <TextBlock Text="iy = " Foreground="#37474F" FontSize="13" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Results.iy, StringFormat=0.0000, Mode=OneWay}" Style="{StaticResource ResultValueText}"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="3" Text="m" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#78909C"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ================= TAB 2: KIỂM TRA ĐIỀU KIỆN BỀN ================= -->
+            <TabItem Header="2. Kiểm tra điều kiện bền">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="25">
+                    <StackPanel>
+                        <!-- KHU VỰC NHẬP LỰC TẬP TRUNG -->
+                        <Border BorderBrush="{StaticResource BorderGray}" BorderThickness="1" CornerRadius="8" Background="#ECEFF1" Padding="20" Margin="0,0,0,25">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="⚙️ Thông số tải trọng phụ trợ (Tính nén cục bộ bản bụng dầm tổ hợp hàn):" FontWeight="Bold" Foreground="#37474F" FontSize="13" Margin="0,0,0,10"/>
+                                    <WrapPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,30,5">
+                                            <TextBlock Text="Lực tập trung tính toán F = " VerticalAlignment="Center" Foreground="#546E7A"/>
+                                            <TextBox x:Name="txtInput_F" Width="80" Height="28" Text="{Binding ConcentratedForceF, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Padding="5,0"/>
+                                            <TextBlock Text=" kN" VerticalAlignment="Center" Foreground="#78909C" Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,20,5">
+                                            <TextBlock Text="Chiều dài phân bố thực tế b = " VerticalAlignment="Center" Foreground="#546E7A"/>
+                                            <TextBox x:Name="txtInput_b" Width="80" Height="28" Text="{Binding DistributionLengthB, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Padding="5,0"/>
+                                            <TextBlock Text=" mm" VerticalAlignment="Center" Foreground="#78909C" Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                    </WrapPanel>
+                                </StackPanel>
+                                <Button Grid.Column="1" Content="⚡ Kiểm tra điều kiện bền" Background="{StaticResource PrimaryBlue}" Foreground="White" Width="180" Height="40" FontWeight="Bold" Cursor="Hand" Click="btnKiemTraBen_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </Border>
+
+                        <!-- CARD 1.1: BỀN CHỊU UỐN -->
+                        <Border BorderBrush="{StaticResource BorderGray}" BorderThickness="1" CornerRadius="10" Padding="20" Margin="0,0,0,15" Background="White">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="150"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="1.1. ĐỘ BỀN CHỊU UỐN TRONG MẶT PHẲNG CHÍNH" FontWeight="Bold" FontSize="14" Foreground="#1A237E" Margin="0,0,0,10"/>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Công thức kiểm tra: "/> <Run Text="σ = M / Wx ≤ f * γc" FontWeight="Bold" Foreground="#37474F"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Ứng suất pháp lớn nhất phát sinh: "/> <Run Text="{Binding Results.Sigma, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#0D47A1"/> <Run Text=" MPa"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}"><Run Text="Cường độ uốn cho phép chịu tải: "/> <Run Text="{Binding Results.LimitF, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#2E7D32"/> <Run Text=" MPa"/></TextBlock>
+                                </StackPanel>
+                                <Border x:Name="badgeSigma" Grid.Column="1" CornerRadius="8" Width="110" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock x:Name="lblBadgeSigma" Text="-" FontWeight="Bold" Foreground="White" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- CARD 1.2: BỀN CHỊU CẮT -->
+                        <Border BorderBrush="{StaticResource BorderGray}" BorderThickness="1" CornerRadius="10" Padding="20" Margin="0,0,0,15" Background="White">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="150"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="1.2. ĐỘ BỀN CHỊU CẮT (THEO ZHURAVSKY)" FontWeight="Bold" FontSize="14" Foreground="#1A237E" Margin="0,0,0,10"/>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Công thức kiểm tra: "/> <Run Text="τ = (V * Sx) / (Ix * tw) ≤ fv * γc" FontWeight="Bold" Foreground="#37474F"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Ứng suất tiếp lớn nhất phát sinh: "/> <Run Text="{Binding Results.Tau, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#0D47A1"/> <Run Text=" MPa"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}"><Run Text="Cường độ cắt cho phép chịu tải: "/> <Run Text="{Binding Results.LimitFv, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#2E7D32"/> <Run Text=" MPa"/></TextBlock>
+                                </StackPanel>
+                                <Border x:Name="badgeTau" Grid.Column="1" CornerRadius="8" Width="110" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock x:Name="lblBadgeTau" Text="-" FontWeight="Bold" Foreground="White" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- CARD 1.3: BỀN NÉN CỤC BỘ -->
+                        <Border BorderBrush="{StaticResource BorderGray}" BorderThickness="1" CornerRadius="10" Padding="20" Background="White">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="150"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="1.3. ĐỘ BỀN NÉN CỤC BỘ CỦA BẢN BỤNG DẦM TỔ HỢP HÀN" FontWeight="Bold" FontSize="14" Foreground="#1A237E" Margin="0,0,0,10"/>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Công thức kiểm tra: "/> <Run Text="σc = F / (leff * tw) ≤ f * γc" FontWeight="Bold" Foreground="#37474F"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Chiều dài phân bố hiệu dụng: "/> <Run Text="{Binding Results.Leff, StringFormat=0.000, Mode=OneWay}" FontWeight="Bold" Foreground="#37474F"/> <Run Text=" m  |  (với hy = tf)" Foreground="#78909C"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Ứng suất nén cục bộ phát sinh: "/> <Run Text="{Binding Results.SigmaC, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#0D47A1"/> <Run Text=" MPa"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}"><Run Text="Cường độ nén cho phép chịu tải: "/> <Run Text="{Binding Results.LimitF, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#2E7D32"/> <Run Text=" MPa"/></TextBlock>
+                                </StackPanel>
+                                <Border x:Name="badgeSigmaC" Grid.Column="1" CornerRadius="8" Width="110" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock x:Name="lblBadgeSigmaC" Text="-" FontWeight="Bold" Foreground="White" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ================= TAB 3: KIỂM TRA ĐIỀU KIỆN ỔN ĐỊNH ================= -->
+            <TabItem Header="3. Kiểm tra ổn định">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="25">
+                    <StackPanel>
+                        <!-- KHU VỰC THÔNG SỐ NHẬP ỔN ĐỊNH -->
+                        <Border BorderBrush="{StaticResource BorderGray}" BorderThickness="1" CornerRadius="8" Background="#ECEFF1" Padding="20" Margin="0,0,0,20">
+                            <StackPanel>
+                                <TextBlock Text="⚙️ Cấu hình thông số chiều dài tự do ngoài mặt phẳng uốn dầm:" FontWeight="Bold" Foreground="#37474F" FontSize="13" Margin="0,0,0,15"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <WrapPanel Grid.Column="0" VerticalAlignment="Center">
+                                        <!-- Nhập nhịp L -->
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,25,8">
+                                            <TextBlock Text="Chiều dài nhịp tự do L = " VerticalAlignment="Center" Foreground="#546E7A" FontSize="13"/>
+                                            <TextBox x:Name="txtInput_L" Width="70" Height="28" Text="{Binding L, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Padding="5,0"/>
+                                            <TextBlock Text=" m" VerticalAlignment="Center" Foreground="#78909C" Margin="3,0,0,0"/>
+                                        </StackPanel>
+                                        <!-- Chọn k -->
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,25,8">
+                                            <TextBlock Text="Liên kết hai đầu dầm (k): " VerticalAlignment="Center" Foreground="#546E7A" FontSize="13"/>
+                                            <ComboBox x:Name="cboLinkType" Width="230" Height="28" SelectedIndex="{Binding LinkTypeIndex, Mode=TwoWay}" VerticalContentAlignment="Center" SelectionChanged="cboLinkType_SelectionChanged">
+                                                <ComboBoxItem Content="Hai đầu khớp xoay ngang (k = 1.0)"/>
+                                                <ComboBoxItem Content="Một đầu khớp, một đầu ngàm (k = 0.7)"/>
+                                                <ComboBoxItem Content="Hai đầu ngàm cứng (k = 0.5)"/>
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <!-- Chọn vị trí tải -->
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,25,8">
+                                            <TextBlock Text="Vị trí đặt tải trọng: " VerticalAlignment="Center" Foreground="#546E7A" FontSize="13"/>
+                                            <ComboBox x:Name="cboLoadPosition" Width="180" Height="28" SelectedIndex="{Binding LoadPositionIndex, Mode=TwoWay}" VerticalContentAlignment="Center" SelectionChanged="cboLoadPosition_SelectionChanged">
+                                                <ComboBoxItem Content="Ở cánh trên của dầm"/>
+                                                <ComboBoxItem Content="Ở cánh dưới của dầm"/>
+                                                <ComboBoxItem Content="Uốn thuần túy / Không phụ thuộc"/>
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <!-- Chọn loadcase bảng E.1 -->
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                            <TextBlock Text="Dạng tải &amp; Cố kết nhịp: " VerticalAlignment="Center" Foreground="#546E7A" FontSize="13"/>
+                                            <ComboBox x:Name="cboLoadCaseTableE" Width="290" Height="28" SelectedIndex="{Binding LoadCaseIndex, Mode=TwoWay}" VerticalContentAlignment="Center" SelectionChanged="cboLoadCaseTableE_SelectionChanged">
+                                                <ComboBoxItem Content="Tải tập trung ở cánh trên (Không giằng nhịp)"/>
+                                                <ComboBoxItem Content="Tải tập trung ở cánh dưới (Không giằng nhịp)"/>
+                                                <ComboBoxItem Content="Tải phân bố đều ở cánh trên (Không giằng nhịp)"/>
+                                                <ComboBoxItem Content="Tải phân bố đều ở cánh dưới (Không giằng nhịp)"/>
+                                                <ComboBoxItem Content="Dầm có 2 hoặc nhiều điểm giằng nhịp đều nhau"/>
+                                            </ComboBox>
+                                        </StackPanel>
+                                    </WrapPanel>
+                                    <Button Grid.Column="1" Content="⚡ Tính toán ổn định" Background="{StaticResource PrimaryBlue}" Foreground="White" Width="160" Height="40" FontWeight="Bold" Cursor="Hand" VerticalAlignment="Center" Margin="15,0,0,0" Click="btnKiemTraOnDinh_Click">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- CARD 2.1: MIỄN KIỂM TRA ỔN ĐỊNH TỔNG THỂ -->
+                        <Border BorderBrush="{StaticResource BorderGray}" BorderThickness="1" CornerRadius="10" Padding="20" Margin="0,0,0,15" Background="White">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="180"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="2.1. ĐÁNH GIÁ ĐIỀU KIỆN MIỄN KIỂM TRA ỔN ĐỊNH TỔNG THỂ" FontWeight="Bold" FontSize="14" Foreground="#1A237E" Margin="0,0,0,10"/>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Chiều dài tự do dầm: "/> <Run Text="{Binding Results.L0, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#37474F"/> <Run Text=" m  |  (l0 = k * L)" Foreground="#78909C"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Tỉ số mảnh thực tế dầm (l0 / bf): "/> <Run Text="{Binding Results.ActualRatioL0Bf, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#0D47A1"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}"><Run Text="Trị số giới hạn cho phép [l0 / bf] (Bảng 13): "/> <Run Text="{Binding Results.LimitRatioL0Bf, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#2E7D32"/></TextBlock>
+                                </StackPanel>
+                                <Border x:Name="badgeExempt" Grid.Column="1" CornerRadius="8" Width="150" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock x:Name="lblBadgeExempt" Text="-" FontWeight="Bold" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- CARD 2.2: CHI TIẾT TỔNG THỂ -->
+                        <Border x:Name="panelDetailStability" BorderBrush="{StaticResource BorderGray}" BorderThickness="1" CornerRadius="10" Padding="20" Background="White" Visibility="Visible" Margin="0,0,0,15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="180"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="2.2. CHI TIẾT TÍNH TOÁN ỔN ĐỊNH TỔNG THỂ NGOÀI MẶT PHẲNG" FontWeight="Bold" FontSize="14" Foreground="#1A237E" Margin="0,0,0,12"/>
+                                    <WrapPanel Margin="0,0,0,10">
+                                        <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,25,5"><Run Text="Hệ số α = "/> <Run Text="{Binding Results.Alpha, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#37474F"/></TextBlock>
+                                        <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,25,5"><Run Text="Hệ số ψ = "/> <Run Text="{Binding Results.Psi, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#37474F"/></TextBlock>
+                                        <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,25,5"><Run Text="Hệ số φ1 = "/> <Run Text="{Binding Results.Phi1, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#37474F"/></TextBlock>
+                                        <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,25,5"><Run Text="Hệ số φb = "/> <Run Text="{Binding Results.PhiB, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#0D47A1"/></TextBlock>
+                                    </WrapPanel>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Công thức kiểm tra: "/> <Run Text="M / (φb * Wx) ≤ f * γc" FontWeight="Bold" Foreground="#37474F"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Ứng suất ổn định phát sinh: "/> <Run Text="{Binding Results.SigmaOD, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#0D47A1"/> <Run Text=" MPa"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}"><Run Text="Cường độ uốn cho phép thiết kế: "/> <Run Text="{Binding Results.LimitF, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#2E7D32"/> <Run Text=" MPa"/></TextBlock>
+                                </StackPanel>
+                                <Border x:Name="badgeStabilityCheck" Grid.Column="1" CornerRadius="8" Width="150" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock x:Name="lblBadgeStabilityCheck" Text="-" FontWeight="Bold" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- CARD 2.3: NÉN LỆCH TÂM TRONG MẶT PHẲNG -->
+                        <Border BorderBrush="{StaticResource BorderGray}" BorderThickness="1" CornerRadius="10" Padding="20" Background="White" Margin="0,0,0,15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="180"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="2.3. KIỂM TRA ĐIỀU KIỆN ỔN ĐỊNH TRONG MẶT PHẲNG UỐN (NÉN LỆCH TÂM)" FontWeight="Bold" FontSize="14" Foreground="#1A237E" Margin="0,0,0,15"/>
+                                    <Border Background="#F5F7FA" CornerRadius="6" Padding="15" Margin="0,0,0,15">
+                                        <StackPanel>
+                                            <TextBlock Text="⚙️ Thông số tải trọng và hệ số nén lệch tâm:" FontWeight="Bold" Foreground="#37474F" FontSize="12" Margin="0,0,0,10"/>
+                                            <WrapPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,20,5">
+                                                    <TextBlock Text="Lực nén dọc trục N = " VerticalAlignment="Center" Foreground="#546E7A" FontSize="12"/>
+                                                    <TextBox x:Name="txtInput_N" Width="70" Height="25" Text="{Binding AxialForceN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Padding="5,0"/>
+                                                    <TextBlock Text=" kN" VerticalAlignment="Center" Foreground="#78909C" Margin="3,0,0,0"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,20,5">
+                                                    <TextBlock Text="Hệ số ảnh hưởng hình dạng η = " VerticalAlignment="Center" Foreground="#546E7A" FontSize="12"/>
+                                                    <TextBox x:Name="txtInput_Eta" Width="60" Height="25" Text="{Binding ShapeFactorEta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Padding="5,0"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                                    <TextBlock Text="Hệ số nén lệch tâm φe (Tra bảng D.10) = " VerticalAlignment="Center" Foreground="#D84315" FontWeight="Bold" FontSize="12"/>
+                                                    <TextBox x:Name="txtInput_PhiE" Width="70" Height="25" Text="{Binding PhiEInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Padding="5,0" Foreground="#D84315" FontWeight="Bold"/>
+                                                    <TextBlock Text=" *" VerticalAlignment="Center" Foreground="#D84315" Margin="5,0,0,0" ToolTip="Nhập dạng thập phân, ví dụ: 0.750 (thay vì 750 trong bảng)"/>
+                                                </StackPanel>
+                                            </WrapPanel>
+                                            <TextBlock Text="* Chú thích: Hãy sử dụng 2 giá trị độ mảnh quy ước (λx) và độ lệch tâm tính đổi (me) tính toán bên dưới để tra bảng D.10." FontSize="11" FontStyle="Italic" Foreground="#78909C" Margin="0,5,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <WrapPanel Margin="0,0,0,10">
+                                        <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,20,5"><Run Text="Độ mảnh thực tế λx = "/> <Run Text="{Binding Results.LambdaX, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#37474F"/></TextBlock>
+                                        <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,20,5"><Run Text="Độ mảnh quy ước λx_quyước = "/> <Run Text="{Binding Results.LambdaXQuyUoc, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#0D47A1"/></TextBlock>
+                                        <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,20,5"><Run Text="Độ lệch tâm mx = "/> <Run Text="{Binding Results.Mx_Ecc, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#37474F"/></TextBlock>
+                                        <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Độ lệch tâm tính đổi me = "/> <Run Text="{Binding Results.Me, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#0D47A1"/></TextBlock>
+                                    </WrapPanel>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Công thức kiểm tra ổn định: "/> <Run Text="N / (φe * A) ≤ f * γc" FontWeight="Bold" Foreground="#37474F"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Ứng suất ổn định trong mặt phẳng: "/> <Run Text="{Binding Results.SigmaInPlane, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#0D47A1"/> <Run Text=" MPa"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}"><Run Text="Cường độ chịu nén cho phép: "/> <Run Text="{Binding Results.LimitF, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#2E7D32"/> <Run Text=" MPa"/></TextBlock>
+                                </StackPanel>
+                                <Border x:Name="badgeInPlaneCheck" Grid.Column="1" CornerRadius="8" Width="150" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock x:Name="lblBadgeInPlaneCheck" Text="-" FontWeight="Bold" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- CARD 2.4: ỔN ĐỊNH CỤC BỘ CÁNH DẦM -->
+                        <Border BorderBrush="{StaticResource BorderGray}" BorderThickness="1" CornerRadius="10" Padding="20" Background="White" Margin="0,15,0,15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="180"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="2.4. KIỂM TRA ĐIỀU KIỆN ỔN ĐỊNH CỤC BỘ BẢN CÁNH DẦM" FontWeight="Bold" FontSize="14" Foreground="#1A237E" Margin="0,0,0,10"/>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Công thức kiểm tra: "/> <Run Text="b0 / tf ≤ [b0 / tf] = (0.36 + 0.10 * λ_max) * √(E / f)" FontWeight="Bold" Foreground="#37474F"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Phần bản cánh nhô ra b0: "/> <Run Text="{Binding Results.B0, StringFormat=0.000, Mode=OneWay}" FontWeight="Bold" Foreground="#37474F"/> <Run Text=" m  |  (b0 = [bf - tw] / 2)" Foreground="#78909C"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Tỉ số độ mảnh bản cánh thực tế (b0 / tf): "/> <Run Text="{Binding Results.RatioB0Tf, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#0D47A1"/></TextBlock>
+                                    <TextBlock Style="{StaticResource LabelCheckText}"><Run Text="Trị số giới hạn cho phép [b0 / tf] (Bảng 34): "/> <Run Text="{Binding Results.LimitB0Tf, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#2E7D32"/> <Run x:Name="txtValLambdaMaxDetail" Text=" (với λ_max = 2.00)" Foreground="#78909C" FontSize="11"/></TextBlock>
+                                </StackPanel>
+                                <Border x:Name="badgeFlangeLocalCheck" Grid.Column="1" CornerRadius="8" Width="150" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock x:Name="lblBadgeFlangeLocalCheck" Text="-" FontWeight="Bold" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- CARD 2.5: ỔN ĐỊNH CỤC BỘ BẢN BỤNG DẦ -->
+                        <Border BorderBrush="{StaticResource BorderGray}" BorderThickness="1" CornerRadius="10" Padding="20" Background="White" Margin="0,0,0,15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="180"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="2.5. KIỂM TRA ĐIỀU KIỆN ỔN ĐỊNH CỤC BỘ BẢN BỤNG DẦM" FontWeight="Bold" FontSize="14" Foreground="#1A237E" Margin="0,0,0,15"/>
+                                    <Border Background="#F5F7FA" CornerRadius="6" Padding="15" Margin="0,0,0,15">
+                                        <StackPanel>
+                                            <TextBlock Text="⚙️ Cấu hình điều kiện tải trọng và loại sườn cấu tạo:" FontWeight="Bold" Foreground="#37474F" FontSize="12" Margin="0,0,0,10"/>
+                                            <WrapPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,25,5">
+                                                    <TextBlock Text="Loại tải trọng tác dụng: " VerticalAlignment="Center" Foreground="#546E7A" FontSize="12"/>
+                                                    <ComboBox x:Name="cboLoadTypeWeb" Width="200" Height="25" SelectedIndex="{Binding LoadTypeWebIndex, Mode=TwoWay}" VerticalContentAlignment="Center" SelectionChanged="cboLoadTypeWeb_SelectionChanged">
+                                                        <ComboBoxItem Content="Tải trọng TĨNH (Giới hạn λw_gh = 3.2)"/>
+                                                        <ComboBoxItem Content="Tải trọng ĐỘNG (Giới hạn λw_gh = 2.2)"/>
+                                                    </ComboBox>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                                    <TextBlock Text="Phương án bố trí sườn ngang: " VerticalAlignment="Center" Foreground="#546E7A" FontSize="12"/>
+                                                    <ComboBox x:Name="cboRibLayout" Width="240" Height="25" SelectedIndex="{Binding RibLayoutIndex, Mode=TwoWay}" VerticalContentAlignment="Center" SelectionChanged="cboRibLayout_SelectionChanged">
+                                                        <ComboBoxItem Content="Bố trí cặp sườn ngang đối xứng hai bên"/>
+                                                        <ComboBoxItem Content="Chỉ bố trí sườn ngang một bên bản bụng"/>
+                                                    </ComboBox>
+                                                </StackPanel>
+                                            </WrapPanel>
+                                        </StackPanel>
+                                    </Border>
+                                    <WrapPanel Margin="0,0,0,10">
+                                        <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,25,5"><Run Text="Tỷ số độ mảnh bản bụng (hw / tw) = "/> <Run Text="{Binding Results.RatioHwTw, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#37474F"/></TextBlock>
+                                        <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,25,5"><Run Text="Độ mảnh quy ước bản bụng λw = "/> <Run Text="{Binding Results.LambdaW, StringFormat=0.00, Mode=OneWay}" FontWeight="Bold" Foreground="#0D47A1"/></TextBlock>
+                                        <TextBlock Style="{StaticResource LabelCheckText}" Margin="0,0,0,5"><Run Text="Trị số giới hạn kiểm tra λw_gh = "/> <Run Text="{Binding Results.LimitLambdaW, StringFormat=0.1, Mode=OneWay}" FontWeight="Bold" Foreground="#2E7D32"/></TextBlock>
+                                    </WrapPanel>
+                                    <Border Background="#ECEFF1" CornerRadius="6" Padding="15,10">
+                                        <StackPanel>
+                                            <TextBlock Text="📋 KẾT LUẬN VỀ YÊU CẦU CẤU TẠO SƯỜN CỨNG:" FontWeight="Bold" Foreground="#37474F" FontSize="12" Margin="0,0,0,6"/>
+                                            <TextBlock x:Name="txtWebStatusText" Text="Bản bụng đủ dày tự bảo đảm ổn định cục bộ. Không cần bố trí sườn cứng dọc nhịp dầm." FontSize="12.5" Foreground="#2E7D32" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                                            <TextBlock x:Name="txtWebDetailText" Text="" FontSize="12" Foreground="#37474F" TextWrapping="Wrap" Margin="0,5,0,0" Visibility="Collapsed"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                                <Border x:Name="badgeWebLocalCheck" Grid.Column="1" CornerRadius="8" Width="150" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock x:Name="lblBadgeWebLocalCheck" Text="-" FontWeight="Bold" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ================= TAB 4: KIỂM TRA ĐỘ VÕNG ================= -->
+            <TabItem Header="4. Kiểm tra độ võng" IsEnabled="False"/>
+        </TabControl>
     </Grid>
-</Window>
+</Page>
