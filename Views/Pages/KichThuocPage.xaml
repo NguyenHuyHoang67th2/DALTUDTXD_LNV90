@@ -1,12 +1,139 @@
-﻿<Window x:Class="DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages.KichThuocPage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages"
-        mc:Ignorable="d"
-        Title="KichThuocPage" Height="450" Width="800">
-    <Grid>
-        
+﻿<Page x:Class="DALTUDTXD_KIEMTRADAMTHEP_0024167_67TH2.Views.Pages.KichThuocPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="KichThuocPage"
+      Background="#F0F2F5"
+      Loaded="Page_Loaded">
+
+  <Page.Resources>
+    <SolidColorBrush x:Key="PrimaryBlue" Color="#1A237E"/>
+    <SolidColorBrush x:Key="AccentBlue"  Color="#0D47A1"/>
+    <SolidColorBrush x:Key="BorderGray"  Color="#CFD8DC"/>
+
+    <Style x:Key="InputTextBox" TargetType="TextBox">
+      <Setter Property="Height" Value="35"/>
+      <Setter Property="Width" Value="150"/>
+      <Setter Property="FontSize" Value="14"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="Padding" Value="8,0"/>
+      <Setter Property="BorderBrush" Value="{StaticResource BorderGray}"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+  </Page.Resources>
+
+  <Grid Margin="30">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="0" Margin="0,0,0,20">
+      <StackPanel HorizontalAlignment="Left">
+        <TextBlock Text="BƯỚC 1: KÍCH THƯỚC HÌNH HỌC TIẾT DIỆN DẦM CHỮ I"
+                   FontSize="18" FontWeight="Bold" Foreground="{StaticResource PrimaryBlue}"/>
+        <TextBlock Text="Thiết lập các kích thước mặt cắt ngang và cập nhật mô hình mô phỏng trực quan"
+                   FontSize="12" Foreground="#546E7A" Margin="0,4,0,0"/>
+      </StackPanel>
+
+      <Button Content="↩ Quay lại trang chủ"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Center"
+              Background="#546E7A" Foreground="White"
+              Padding="15,8" FontWeight="SemiBold" Cursor="Hand"
+              Click="btnQuayLai_Click">
+        <Button.Template>
+          <ControlTemplate TargetType="Button">
+            <Border Background="{TemplateBinding Background}" CornerRadius="5">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+            </Border>
+          </ControlTemplate>
+        </Button.Template>
+      </Button>
     </Grid>
-</Window>
+
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="400"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+
+      <!-- CỘT TRÁI: NHẬP THÔNG SỐ (RÀNG BUỘC MVVM HAI CHIỀU) -->
+      <Border Grid.Column="0" Background="White" CornerRadius="10" Padding="25" BorderBrush="{StaticResource BorderGray}" BorderThickness="1">
+        <StackPanel>
+          <TextBlock Text="THAM SỐ HÌNH HỌC (mm)" FontSize="15" FontWeight="Bold" Foreground="#37474F" Margin="0,0,0,20"/>
+
+          <StackPanel Margin="0,0,0,15">
+            <TextBlock Text="Chiều cao bản bụng (hw):" FontSize="13" Foreground="#546E7A" Margin="0,0,0,5" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal">
+              <TextBox x:Name="txtHw" Style="{StaticResource InputTextBox}"
+                       Text="{Binding Hw, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <TextBlock Text="mm" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#78909C"/>
+            </StackPanel>
+          </StackPanel>
+
+          <StackPanel Margin="0,0,0,15">
+            <TextBlock Text="Chiều dày bản bụng (tw):" FontSize="13" Foreground="#546E7A" Margin="0,0,0,5" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal">
+              <TextBox x:Name="txtTw" Style="{StaticResource InputTextBox}"
+                       Text="{Binding Tw, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <TextBlock Text="mm" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#78909C"/>
+            </StackPanel>
+          </StackPanel>
+
+          <StackPanel Margin="0,0,0,15">
+            <TextBlock Text="Chiều rộng bản cánh (bf):" FontSize="13" Foreground="#546E7A" Margin="0,0,0,5" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal">
+              <TextBox x:Name="txtBf" Style="{StaticResource InputTextBox}"
+                       Text="{Binding Bf, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <TextBlock Text="mm" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#78909C"/>
+            </StackPanel>
+          </StackPanel>
+
+          <StackPanel Margin="0,0,0,25">
+            <TextBlock Text="Chiều dày bản cánh (tf):" FontSize="13" Foreground="#546E7A" Margin="0,0,0,5" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal">
+              <TextBox x:Name="txtTf" Style="{StaticResource InputTextBox}"
+                       Text="{Binding Tf, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+              <TextBlock Text="mm" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#78909C"/>
+            </StackPanel>
+          </StackPanel>
+
+          <Button Content="💾 Lưu &amp; Cập nhật hình học"
+                  Background="{StaticResource PrimaryBlue}" Foreground="White"
+                  Height="45" FontWeight="Bold" FontSize="14" Cursor="Hand"
+                  Click="btnSave_Click">
+            <Button.Template>
+              <ControlTemplate TargetType="Button">
+                <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                  <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+              </ControlTemplate>
+            </Button.Template>
+          </Button>
+        </StackPanel>
+      </Border>
+
+      <!-- CỘT PHẢI: KHU VỰC BẢN VẼ MÔ PHỎNG -->
+      <Border Grid.Column="1" Margin="25,0,0,0" Background="White" CornerRadius="10"
+              BorderBrush="{StaticResource BorderGray}" BorderThickness="1" Padding="15">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+
+          <TextBlock Grid.Row="0" Text="📊 MÔ HÌNH MẶT CẮT NGANG THỰC TẾ" FontSize="14" FontWeight="Bold" Foreground="#37474F" HorizontalAlignment="Center"/>
+
+          <Canvas x:Name="DrawingCanvas" Grid.Row="1" Background="#FAFAFA" Margin="10" ClipToBounds="True">
+            <Polygon x:Name="BeamPolygon" Fill="#B0BEC5" Stroke="{StaticResource PrimaryBlue}" StrokeThickness="2" />
+            <TextBlock x:Name="lblBf" Text="bf" FontWeight="Bold" Foreground="{StaticResource AccentBlue}" FontSize="12"/>
+            <TextBlock x:Name="lblHw" Text="hw" FontWeight="Bold" Foreground="{StaticResource AccentBlue}" FontSize="12"/>
+            <TextBlock x:Name="lblTf" Text="tf" FontWeight="Bold" Foreground="{StaticResource AccentBlue}" FontSize="12"/>
+            <TextBlock x:Name="lblTw" Text="tw" FontWeight="Bold" Foreground="{StaticResource AccentBlue}" FontSize="12"/>
+          </Canvas>
+        </Grid>
+      </Border>
+    </Grid>
+  </Grid>
+</Page>
